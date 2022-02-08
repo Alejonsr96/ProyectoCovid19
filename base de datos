@@ -1,0 +1,26 @@
+
+
+
+
+   create table Tweets en español (
+            id int auto_increnent,
+            date
+            screen_name  varchar(100)
+            full_name  varchar(100)
+            tweet_text  varchar(100)
+            twett_id  varchar(100)
+            link  varchar(100)
+            media  varchar(100)
+            location  varchar(100)
+            rewteets int(1000)
+            app varchar(100)
+            followers int(1000)
+            follow int(1000)
+            listed varchar(100)
+            bio varchar(100)
+            primary key(id)
+	);
+  
+  
+  
+  
