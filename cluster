@@ -1,0 +1,41 @@
+library(twitteR)
+install.packages("RCurl")
+library(RCurl)
+library(tm)
+install.packages("wordcloud")
+install.packages("RColorBrewer")
+library(wordcloud)
+library(RColorBrewer)
+library(tm)
+install.packages("tm")
+
+consumerKey = "0aGmREqJZygQKYs18w0XW4Nz1"
+consumerSecret = "UnVEyLGoeVBUcy43QQBJmfMBbsR3wMwsB8Y4fcerVKqt2apITN"
+accessToken = "1303125976390545408-LkkGrm1tRpYqimFdws0L7zsDQHDdVb"
+accessTokenSecret ="SNyDT1AAQfGAT1JcMfTdEhZzkPv3ywN7BC1zIDZmzpv3z"
+setup_twitter_oauth(consumerKey, consumerSecret, accessToken, accessTokenSecret)
+1
+u1 <-searchTwitter('Covid19+health', n=500, resultType = "recent")
+class(u1)
+u1_texto <- sapply(u1, function(x) x$getText())
+str(u1_texto)
+
+u1_corpus <- Corpus(VectorSource(u1_texto))
+u1_corpus
+inspect(u1_corpus[1])
+
+u1_corpus<- tm_map(u1_corpus,removePunctuation)
+u1_corpus<- tm_map(u1_corpus,content_transformer(tolower))
+u1_corpus<- tm_map(u1_corpus,removeSparseTerms)
+u1_corpus<- tm_map(u1_corpus,removeWords,stopwords("english"))
+u1_corpus<- tm_map(u1_corpus,removeWords,stopwords("english"))
+u1_corpus<- tm_map(u1_corpus,removeNumbers)
+u1_corpus<- tm_map(u1_corpus,stripWhitespace)
+u1_corpus<- tm_map(u1_corpus,removeWords,c("covid19","health"))
+
+wordcloud(u1_corpus)
+warnings()
+wordcloud(u1_corpus, random.order = F)
+wordcloud(u1_corpus, random.order = F,scale = c(5,0.5))
+wordcloud(u1_corpus, random.order = F,colors = rainbow(200))
+
