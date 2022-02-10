@@ -1,51 +1,27 @@
 #instalar los paquetes necesarios y las librerias
-install.packages("twitteR")
-library(twitteR)
-install.packages("ROAuth")
-library(ROAuth)
-library(httr)
-library(tm)
-library(syuzhet)
-library(SnowballC)
-#comprobar el directorio en el  que estamos trabajando
-getwd()
+install.packages("sentimentr")
+library(sentimentr)
+text<-"this video is awesome. the author is boring"
+sentiment(tweets)
 
-#cargar los tweets (archivo csv) en un objeto llamado "tweets"
-tweets<- read.csv("covidenglish.csv")
+library(magrittr)
+install.packages("tidyverse")
+library(tidyverse)
+library(readxl)
+#importar la base de datos
 tweets <- read_excel("C:/Users/USUARIO/Downloads/covidenglish.xlsx")
-View(tweets)
+rm(covidenglish)
+deb<-tweets
+deb %>%   
+  get_sentences() %>%
+  sentiment() -> deb_senti
 
-#crear un corpus de documentos
-corpus = Corpus(VectorSource(tweets$text)) #lee los tweets dentro del corpus para que nos permita manipular las palabras
-length(corpus) #ver cuantos tweets tenemos
-content(corpus[[151]]) #ver dentro del corpus para ver si estan de la forma correcta los tweets
+deb_senti %>%
+  ggplot() + geom_density(aes(sentiment))
 
-#paso 2: pre-procesamiento de datos (limpieza)
-corpus<- tm_map(corpus,tolower) #minusculas
-corpus<- tm_map(corpus,PlainTextDocument)
-corpus<- tm_map(corpus,removePunctuation) #quitar puntuacion
-
-
-#quitar las stop words
-stopwords("english")[1:50] # ver cuales son las mas frecuentes que R tiene cargadas
-corpus<- tm_map(corpus,removeWords, c(stopwords("english"),"\U0001f6a8"))
-
-#reducir las palabras a su raiz (cortarlas)
-corpus<- tm_map(corpus,stemDocument)
-corpus<- tm_map(corpus,removeNumbers)
-
-#crear la matriz
-
-frequencies<- DocumentTermMatrix(corpus)
-frequencies
-
-inspect(frequencies[800:805,501:515]) #inspeccionar la matriz con un rango porque es muy grande col y filas
-findFreqTerms(frequencies,lowfreq = 50) #ver cuales son los terminos mas frecuentes en los tweets (palabras que aparecen mas de 50 veces)
-
-#quitar las palabras que aparecen muy poco
-sparse<-removeSparseTerms(frequencies,0.995)
-sparse #ver que hay menor cantidad de terminos
-
-#volver la matriz de terminos un data frame
-tweetsSparse<- as.data.frame(as.matrix(sparse))
-View(tweetsSparse)
+deb$text %>%
+  get_sentences() %>%
+  sentiment_by() %>%
+  highlight()
+  
+  
