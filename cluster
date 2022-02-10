@@ -39,3 +39,4 @@ wordcloud(u1_corpus, random.order = F)
 wordcloud(u1_corpus, random.order = F,scale = c(5,0.5))
 wordcloud(u1_corpus, random.order = F,colors = rainbow(200))
 
+
