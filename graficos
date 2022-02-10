@@ -1,0 +1,56 @@
+import pandas as pd
+# datos de RRSS 2020
+a = ['Flapol', 44118, True, 2006]
+b = ['Anime News Network news feed', 139593, False, 2006]
+c = ['Twitter ads', 340720, True, 2010]
+d = ['BLOX CMS', 2755375, False, 2005]
+e = ['Agorapulse app', 3222487, False, 2003]
+f = ['Orlo', 8691394, True, 2009]
+g = ['Zero Hedge Publisher II', 16382923, True, 2006]
+h = ['Sprout Social', 128441622, False, 2006]
+i = ['Twitter Media Studio', 167050861, True, 2010]
+j = ['Buffer', 225055712, False, 2005]
+k = ['Hootsuite Inc.', 284432423, False, 2003]
+l = ['SocialFlow', 814472174, True, 2009]
+m = ['TweetDeck', 845087276, False, 2005]
+n = ['Twitter for Android', 1313580271, False, 2003]
+r = ['Twitter for iPhone', 1589333106, True, 2009]
+s = ['Twitter Web App', 2132749550, True, 2006]
+
+# lista con datos
+lista_rrss = [a,b,c,d,e,f,g,h,i,j,k,l,m,n,r,s]
+
+# crear dataframe a partir de listas
+df_rrss=pd.DataFrame(lista_rrss,
+            columns = ['Red social', 'Followers', 'ES_FBK', 'Año'])
+df_rrss
+# matplotlib basics 101
+# importar matplotlib
+import matplotlib.pyplot as plt
+
+df_rrss.plot(kind='bar', x='Red social', y='Followers')
+plt.show()
+
+#Pie de tweets ingles vs tweets en español#
+labels = 'Tweets INGLES', 'Tweets ESPAÑOL'
+sizes = [4895, 2895]
+explode = (0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+        shadow=True, startangle=90)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+plt.show()
+
+#Pie de Refollow - tweets ingles vs Refollow - tweets en español
+labels = 'Tweets INGLES', 'Tweets ESPAÑOL'
+sizes = [9136268787, 577307167]
+explode = (0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+
+fig1, ax1 = plt.subplots()
+ax1.pie(sizes, explode=explode, labels=labels, autopct='%10.1f%%',
+        shadow=True, startangle=45)
+ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
+
+plt.show()
